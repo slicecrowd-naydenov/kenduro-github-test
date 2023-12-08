@@ -1,3 +1,10 @@
+name: Deploy to SuperHosting
+
+env:
+  APP_PRODUCTION: kenduro.com
+  APP_DEV: dev.kenduro.com
+  APP_STAGING: staging.kenduro.com
+
 on:
   push:
     branches:
@@ -5,12 +12,6 @@ on:
     - dev
     - staging
 
-env:
-  APP_PRODUCTION: kenduro.com
-  APP_DEV: dev.kenduro.com
-  APP_STAGING: staging.kenduro.com
-
-name: 🚀 Deploy website on push
 jobs:
   web-deploy:
     name: 🎉 Deploy
@@ -19,40 +20,26 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
 
-      - name: Set up production
-        if: ${{github.ref_name == 'main'}}
-        env:
-          APP_NAME: production
+      - name: Set app name
         run: |
-          echo "production"
+          if [ ${{github.ref_name == 'main'}} && ${{github.ref_type == 'branch'}} ]; then
+            echo "APP_NAME=${{env.APP_PRODUCTION}}" >> $GITHUB_ENV
+          fi
 
-      # - name: Set app name
-      #   run: |
-      #     # echo "test"
-      #     # echo "APP_NAME=(${{github.ref_name}} == 'main'):aaa:bbb" >> $GITHUB_ENV
-      #     # echo "APP_TYPE=${{github.ref_type}}" >> $GITHUB_ENV
+          if [ ${{github.ref_name == 'dev'}} && ${{github.ref_type == 'branch'}} ]; then
+            echo "APP_NAME=${{env.APP_DEV}}" >> $GITHUB_ENV
+          fi
 
-      #     if [ ${{github.ref_name == 'main'}} && ${{github.ref_type == 'branch'}} ]; then
-      #       echo "testtt"
-      #     fi
+          if [ ${{github.ref_name == 'staging'}} && ${{github.ref_type == 'branch'}} ]; then
+            echo "APP_NAME=${{env.APP_STAGING}}" >> $GITHUB_ENV
+          fi
 
-      #     # if [ ${{github.ref_name == 'dev'}} && ${{github.ref_type == 'branch'}} ]; then
-      #     #   echo "APP_NAME=${{github.ref_name}}" >> $GITHUB_ENV
-      #     # fi
-
-      #     # if [ ${{github.ref_name == 'staging'}} && ${{github.ref_type == 'branch'}} ]; then
-      #     #   echo "APP_NAME=${{github.ref_name}}" >> $GITHUB_ENV
-      #     # fi
-
-      - name: 📂 Testsss
-        run: |
-          echo "APP_NAME=$APP_NAME"
-
-      # - name: 📂 Sync files
-      #   uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      #   with:
-      #     server: ${{ secrets.FTP_SERVER }}
-      #     username: ${{ secrets.FTP_USERNAME }}
-      #     password: ${{ secrets.FTP_PASSWORD }}
-      #     local-dir: './'
-      #     server-dir: './${{ env.APP_NAME }}'
+      - name: 📂 Sync files
+        if: ${{env.APP_NAME}}
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: './'
+          server-dir: ${{ env.APP_NAME }}
