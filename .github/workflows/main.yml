@@ -16,6 +16,7 @@ jobs:
       - name: Set app name
         run: |
           echo "APP_NAME=${{github.ref_name}}" >> $GITHUB_ENV
+          echo "APP_TYPE=${{github.ref_type}}" >> $GITHUB_ENV
 
           # if [ ${{github.ref_name == 'main'}} && ${{github.ref_type == 'branch'}} ]; then
           #   echo "APP_NAME=kenduro.com" >> $GITHUB_ENV
@@ -32,12 +33,13 @@ jobs:
       - name: 📂 Testsss
         run: |
           echo "APP_NAME: ${{ env.APP_NAME }}"
+          echo "APP_TYPE: ${{ env.APP_TYPE }}"
 
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: './'
-          server-dir: './${{ env.APP_NAME }}'
+      # - name: 📂 Sync files
+      #   uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      #   with:
+      #     server: ${{ secrets.FTP_SERVER }}
+      #     username: ${{ secrets.FTP_USERNAME }}
+      #     password: ${{ secrets.FTP_PASSWORD }}
+      #     local-dir: './'
+      #     server-dir: './${{ env.APP_NAME }}'
