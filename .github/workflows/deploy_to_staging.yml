@@ -1,19 +1,20 @@
 on: [push]
 
 jobs:
-    deploy_job:
-    runs-on: ubuntu-latest
-    name: deploy
-    steps:
-        - name: Checkout
-        uses: actions/checkout@v2
-        - name: Deploy file
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:
-            username: ${{ secrets.FTP_USERNAME }}
-            server: ${{ secrets.FTP_SERVER }}
-            port: ${{ secrets.FTP_PORT }}
-            local_path: './*'
-            remote_path: '/staging.kenduro.com'
-            sftp_only: false
-            password: ${{ secrets.FTP_PASSWORD }}
+  deploy_job:
+  runs-on: ubuntu-latest
+  name: deploy
+  steps:
+    - name: Checkout
+    uses: actions/checkout@v2
+
+    - name: Deploy file
+    uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+    with:
+      username: ${{ secrets.FTP_USERNAME }}
+      server: ${{ secrets.FTP_SERVER }}
+      port: ${{ secrets.FTP_PORT }}
+      local_path: './*'
+      remote_path: '/staging.kenduro.com'
+      sftp_only: false
+      password: ${{ secrets.FTP_PASSWORD }}
