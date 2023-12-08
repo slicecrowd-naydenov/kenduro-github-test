@@ -10,9 +10,10 @@ jobs:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v3
-    - name: Set app name
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
+
+      - name: Set app name
         run: |
           if [ ${{github.ref_name == 'main'}} && ${{github.ref_type == 'branch'}} ]; then
             echo "APP_NAME='./kenduro.com'" >> $GITHUB_ENV
@@ -26,11 +27,11 @@ jobs:
             echo "APP_NAME='./staging.kenduro.com'" >> $GITHUB_ENV
           fi
 
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: './'
-        server-dir: ${{ env.APP_NAME }}
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: './'
+          server-dir: ${{ env.APP_NAME }}
