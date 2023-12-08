@@ -20,8 +20,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set app name
+        env:
+          APP_NAME: ${{github.ref_name == 'main'}}:aaa:bbb
         run: |
-          echo "APP_NAME=${{github.ref_name == 'main'}}?aaa:bbb" >> $GITHUB_ENV
+          echo "test"
+          # echo "APP_NAME=(${{github.ref_name}} == 'main'):aaa:bbb" >> $GITHUB_ENV
           # echo "APP_TYPE=${{github.ref_type}}" >> $GITHUB_ENV
 
           # if [ ${{github.ref_name == 'main'}} && ${{github.ref_type == 'branch'}} ]; then
