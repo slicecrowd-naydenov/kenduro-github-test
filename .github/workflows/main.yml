@@ -22,15 +22,15 @@ jobs:
 
       - name: Set app name
         run: |
-          if [ ${{github.ref_name == 'main'}} && ${{github.ref_type == 'branch'}} ]; then
+          if [[ "${{github.ref_name}}" == 'main' && "${{github.ref_type}}" == 'branch' ]]; then
             echo "APP_NAME=${{env.APP_PRODUCTION}}" >> $GITHUB_ENV
           fi
 
-          if [ ${{github.ref_name == 'dev'}} && ${{github.ref_type == 'branch'}} ]; then
+          if [[ "${{github.ref_name}}" == 'dev' && "${{github.ref_type}}" == 'branch' ]]; then
             echo "APP_NAME=${{env.APP_DEV}}" >> $GITHUB_ENV
           fi
 
-          if [ ${{github.ref_name == 'staging'}} && ${{github.ref_type == 'branch'}} ]; then
+          if [[ "${{github.ref_name}}" == 'staging' && "${{github.ref_type}}" == 'branch' ]]; then
             echo "APP_NAME=${{env.APP_STAGING}}" >> $GITHUB_ENV
           fi
 
