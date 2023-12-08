@@ -15,17 +15,20 @@ jobs:
 
       - name: Set app name
         run: |
-          if [ ${{github.ref_name == 'main'}} && ${{github.ref_type == 'branch'}} ]; then
-            echo "APP_NAME=kenduro.com" >> $GITHUB_ENV
-          fi
+          echo "APP_NAME=${{github.ref_name}}" >> $GITHUB_ENV
 
-          if [ ${{github.ref_name == 'dev'}} && ${{github.ref_type == 'branch'}} ]; then
-            echo "APP_NAME=dev.kenduro.com" >> $GITHUB_ENV
-          fi
+          # if [ ${{github.ref_name == 'main'}} && ${{github.ref_type == 'branch'}} ]; then
+          #   echo "APP_NAME=kenduro.com" >> $GITHUB_ENV
+          # fi
 
-          if [ ${{github.ref_name == 'staging'}} && ${{github.ref_type == 'branch'}} ]; then
-            echo "APP_NAME=staging.kenduro.com" >> $GITHUB_ENV
-          fi
+          # if [ ${{github.ref_name == 'dev'}} && ${{github.ref_type == 'branch'}} ]; then
+          #   echo "APP_NAME=dev.kenduro.com" >> $GITHUB_ENV
+          # fi
+
+          # if [ ${{github.ref_name == 'staging'}} && ${{github.ref_type == 'branch'}} ]; then
+          #   echo "APP_NAME=staging.kenduro.com" >> $GITHUB_ENV
+          # fi
+
       - name: 📂 Testsss
         run: |
           echo "APP_NAME: ${{ env.APP_NAME }}"
