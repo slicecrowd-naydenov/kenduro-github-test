@@ -13,8 +13,9 @@ jobs:
       with:
         username: ${{ secrets.FTP_USERNAME }}
         server: ${{ secrets.FTP_SERVER }}
-        port: ${{ secrets.FTP_PORT }}
+        port: 22
+        # port: ${{ secrets.FTP_PORT }}
         local_path: './*'
         remote_path: '/staging.kenduro.com'
-        sftp_only: false
+        sftp_only: true
         password: ${{ secrets.FTP_PASSWORD }}
