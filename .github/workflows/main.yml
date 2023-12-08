@@ -25,7 +25,7 @@ jobs:
           # echo "APP_TYPE=${{github.ref_type}}" >> $GITHUB_ENV
 
           if [ ${{github.ref_name == 'main'}} && ${{github.ref_type == 'branch'}} ]; then
-            echo "'APP_NAME'='${{env.APP_DEV}}'" >> $GITHUB_ENV
+            echo "APP_NAME=ASD" >> $GITHUB_ENV
           fi
 
           if [ ${{github.ref_name == 'dev'}} && ${{github.ref_type == 'branch'}} ]; then
