@@ -2,14 +2,12 @@ name: Deploy to SuperHosting
 
 env:
   APP_PRODUCTION: kenduro.com
-  APP_DEV: dev.kenduro.com
   APP_STAGING: staging.kenduro.com
 
 on:
   push:
     branches:
     - main
-    - dev
     - staging
 
 jobs:
@@ -26,21 +24,17 @@ jobs:
             echo "APP_NAME=${{env.APP_PRODUCTION}}" >> $GITHUB_ENV
           fi
 
-          if [[ "${{github.ref_name}}" == 'dev' && "${{github.ref_type}}" == 'branch' ]]; then
-            echo "APP_NAME=${{env.APP_DEV}}" >> $GITHUB_ENV
-          fi
-
           if [[ "${{github.ref_name}}" == 'staging' && "${{github.ref_type}}" == 'branch' ]]; then
             echo "APP_NAME=${{env.APP_STAGING}}" >> $GITHUB_ENV
           fi
 
       - name: 📂 Sync files
         if: ${{env.APP_NAME}}
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
           # password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: './'
-          server-dir: ${{ env.APP_NAME }}/
+          local_path: './'
+          remote_path: ${{ env.APP_NAME }}/
