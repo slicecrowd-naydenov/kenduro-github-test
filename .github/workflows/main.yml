@@ -33,9 +33,9 @@ jobs:
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
+          username: motoscho
+          password: sK_Mj[g3dA7D
           port: 1022
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           local_path: './'
           remote_path: ${{ env.APP_NAME }}/
           sftpArgs: '-o ConnectTimeout=5'
