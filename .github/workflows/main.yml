@@ -30,12 +30,10 @@ jobs:
 
       - name: 📂 Sync files
         if: ${{env.APP_NAME}}
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
-          port: 22
-          # password: ${{ secrets.FTP_PASSWORD }}
-          local_path: './'
-          remote_path: ${{ env.APP_NAME }}/
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: './'
+          server-dir: ${{ env.APP_NAME }}/
