@@ -34,7 +34,7 @@ jobs:
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
-          port: 1022
+          port: 21
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           local_path: './'
           remote_path: ${{ env.APP_NAME }}/
